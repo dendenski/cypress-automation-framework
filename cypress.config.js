@@ -2,7 +2,9 @@ const { defineConfig } = require('cypress');
 
 module.exports = defineConfig({
   e2e: {
-    baseUrl: 'https://example.cypress.io',
+    baseUrl: 'https://sign-test.twala.io',
+    viewportWidth: 1440,
+    viewportHeight: 900,
     specPattern: 'cypress/e2e/**/*.cy.{js,jsx,ts,tsx}',
     supportFile: 'cypress/support/e2e.js',
     fixturesFolder: 'cypress/fixtures',

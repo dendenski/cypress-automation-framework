@@ -5,6 +5,9 @@ node_modules/
 cypress/videos/
 cypress/screenshots/
 
+# Cypress environment config (contains credentials)
+cypress.env.json
+
 # Optional npm cache
 .npm/
 
