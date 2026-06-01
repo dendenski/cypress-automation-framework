@@ -1,6 +1,6 @@
 # Cypress Automation Framework
 
-A Cypress-based end-to-end testing framework for automating login and logout workflows.
+A Cypress-based end-to-end automation framework for web application testing.
 
 ## Prerequisites
 
@@ -37,7 +37,23 @@ Create a `cypress.env.json` file in the project root with your test credentials:
 
 ### Base URL
 
-The default base URL is set to `https://sign-test.twala.io` in `cypress.config.js`. Update this if testing against a different environment.
+The default base URL is loaded from `cypress/config/test.json` when the environment is not specified.
+
+### Environments
+
+This framework supports four environments:
+- `test`
+- `staging`
+- `dev`
+- `production`
+
+Base URLs are stored in the `cypress/config/` folder as JSON files:
+- `cypress/config/test.json`
+- `cypress/config/staging.json`
+- `cypress/config/dev.json`
+- `cypress/config/production.json`
+
+The selected environment is loaded automatically from `CYPRESS_ENV` or from the CLI `--env` argument.
 
 ## Running Tests
 
@@ -64,6 +80,14 @@ Runs all tests without the UI and outputs results to the terminal.
 npm run cy:run -- --spec cypress/e2e/login.cy.js
 ```
 
+### Run Tests by Environment
+```bash
+npm run cy:run:test
+npm run cy:run:staging
+npm run cy:run:dev
+npm run cy:run:production
+```
+
 ### Run Tests in a Specific Browser
 ```bash
 npm run cy:run -- --browser chrome
@@ -71,57 +95,21 @@ npm run cy:run -- --browser firefox
 npm run cy:run -- --browser edge
 ```
 
-## Project Structure
+## Folder Structure
 
 ```
 cypress/
-├── e2e/                    # End-to-end test specs
-│   └── login.cy.js        # Login and logout tests
-├── pages/                  # Page Object Models
-│   └── loginPage.js       # Login page object with methods
-├── fixtures/              # Test data (JSON files)
-├── support/               # Cypress support files
-│   ├── e2e.js            # Global setup/config
-│   └── commands.js       # Custom Cypress commands
-├── plugins/              # Cypress plugins
-├── videos/               # Test execution recordings (auto-generated)
-├── screenshots/          # Test failure screenshots (auto-generated)
-└── reports/              # Test reports
+├── e2e/          # End-to-end test specs
+├── pages/        # Page objects and reusable page methods
+├── fixtures/     # Static test data and JSON fixtures
+├── support/      # Global Cypress setup and custom commands
+├── plugins/      # Cypress plugin configuration and hooks
+├── videos/       # Recorded test videos (generated automatically)
+├── screenshots/  # Failure screenshots (generated automatically)
+└── reports/      # Test reports and generated artifacts
 
-cypress.config.js          # Cypress configuration
-cypress.env.json          # Environment variables (not in Git)
-package.json              # Project dependencies
+cypress/config/     # Environment-specific baseUrl configuration files
 ```
-
-## Test Files
-
-### Login Tests (`cypress/e2e/login.cy.js`)
-
-**Test 1: Login Flow**
-- Navigates to login page
-- Enters email and password from `cypress.env.json`
-- Verifies navigation to dashboard
-
-**Test 2: Logout Flow**
-- Logs in with valid credentials
-- Clicks account menu in upper right corner
-- Clicks logout option
-- Confirms logout in popup dialog
-- Verifies redirect back to login page
-
-## Page Objects
-
-### LoginPage (`cypress/pages/loginPage.js`)
-
-**Methods:**
-- `visit()` - Navigate to login page
-- `getEmailInput()` - Get email input field
-- `getPasswordInput()` - Get password input field
-- `getLoginButton()` - Get login button
-- `login(email, password)` - Perform login action
-- `getAccountMenu()` - Get account menu button
-- `logout()` - Perform logout action with confirmation
-- `isLoggedIn()` - Check if user is logged in
 
 ## Viewport Configuration
 
@@ -132,36 +120,6 @@ To change viewport size, edit `cypress.config.js`:
 viewportWidth: 1920,
 viewportHeight: 1080
 ```
-
-## Troubleshooting
-
-### Tests fail with "element not found"
-- Open Cypress UI with `npm run cy:open`
-- Use the browser tools to inspect page elements
-- Update selectors in page objects as needed
-
-### Credentials not being read
-- Ensure `cypress.env.json` exists in project root
-- Verify email and password fields are correctly set
-- Never commit this file to Git
-
-### Logout test fails
-- Confirm the account menu is clickable
-- Verify the logout button text in the dropdown
-- Update `getLogoutButton()` selector if button text differs
-
-### Tests time out
-- Increase timeout in `cypress.config.js`: `defaultCommandTimeout: 10000`
-- Check network/page load times
-- Verify base URL is correct and accessible
-
-## Best Practices
-
-1. **Keep credentials out of version control** - Always use `cypress.env.json` for sensitive data
-2. **Use Page Objects** - Maintain selectors in page objects for easier maintenance
-3. **Use descriptive test names** - Make it clear what each test does
-4. **Add waits strategically** - Wait for elements/navigation, not arbitrary time
-5. **Review test results** - Check videos/screenshots of failed tests
 
 ## CI/CD Integration
 
@@ -176,12 +134,3 @@ Capture test results:
 - Screenshots: `cypress/screenshots/`
 - Reports: Integrate with tools like Mochawesome for detailed reports
 
-## Additional Resources
-
-- [Cypress Documentation](https://docs.cypress.io)
-- [Page Object Model Pattern](https://docs.cypress.io/guides/testing-strategies/page-object-model)
-- [Custom Commands](https://docs.cypress.io/api/cypress-api/custom-commands)
-
-## Support
-
-For issues or questions about the framework, refer to Cypress documentation or check test execution logs in the Cypress UI.
