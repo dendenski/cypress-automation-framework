@@ -1,0 +1,13 @@
+{
+  "name": "cypress-automation-framework",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "cy:open": "cypress open",
+    "cy:run": "cypress run",
+    "test": "npm run cy:run"
+  },
+  "devDependencies": {
+    "cypress": "^12.0.0"
+  }
+}
