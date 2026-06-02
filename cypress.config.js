@@ -28,8 +28,13 @@ function loadConfig(env) {
 
 const environment = getEnvironment();
 const environmentConfig = loadConfig(environment);
+const dayjs = require('dayjs')
+
+const timestamp = dayjs().format('YYYYMMDD-HHmm')
 
 module.exports = defineConfig({
+  allowCypressEnv: false,
+  video: true,
   e2e: {
     baseUrl: environmentConfig.baseUrl,
     viewportWidth: 1440,
@@ -39,7 +44,18 @@ module.exports = defineConfig({
     fixturesFolder: 'cypress/fixtures',
     videosFolder: 'cypress/videos',
     screenshotsFolder: 'cypress/screenshots',
-    reporter: 'spec',
+    reporter: 'mochawesome',
+    reporterOptions: {
+      reportDir: 'cypress/reports',
+      overwrite: true,
+      timestamp: false,
+      reportFilename: 'cypress-e2e-' + environment + '-report-' + timestamp,
+      html: true,
+      json: true,
+      embeddedScreenshots: true,
+      inlineAssets: true,
+      charts: true
+    },
     setupNodeEvents(on, config) {
       require('./cypress/plugins/index.js')(on, config);
       return config;

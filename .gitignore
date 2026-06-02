@@ -4,6 +4,7 @@ node_modules/
 # Cypress artifacts
 cypress/videos/
 cypress/screenshots/
+cypress/reports/
 
 # Cypress environment config (contains credentials)
 cypress.env.json
