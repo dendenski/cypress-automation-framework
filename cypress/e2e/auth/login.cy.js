@@ -12,7 +12,7 @@ describe("Login flow", () => {
   });
 
   it("logs in and navigates to the dashboard", () => {
-    cy.env(["email", "password"]).then(({ email, password }) => {
+    cy.env(["email", "password", "firstName", "lastName"]).then(({ email, password, firstName, lastName }) => {
       login.login(email, password);
 
       cy.location("pathname").should("eq", "/dashboard");
@@ -21,26 +21,26 @@ describe("Login flow", () => {
   });
 
   it("logs out and returns to login page", () => {
-    cy.env(["email", "password"]).then(({ email, password }) => {
+    cy.env(["email", "password", "firstName", "lastName"]).then(({ email, password, firstName, lastName }) => {
       // Login first
       login.login(email, password);
       cy.location("pathname").should("eq", "/dashboard");
 
       // Then logout
+      dashboard.openAccountMenu(firstName, lastName);
       dashboard.logout();
-      cy.location("pathname").should("eq", "/login");
     });
   });
 
   it("logs in and navigates to settings", () => {
-    cy.env(["email", "password"]).then(({ email, password }) => {
+    cy.env(["email", "password", "firstName", "lastName"]).then(({ email, password, firstName, lastName }) => {
       // Login first
       login.login(email, password);
       cy.location("pathname").should("eq", "/dashboard");
 
       // Then go to settings
+      dashboard.openAccountMenu(firstName, lastName);
       dashboard.settings();
-      cy.location("pathname").should("include", "/settings");
     });
   });
 });

@@ -108,7 +108,8 @@ npm run cy:run -- --browser edge
 ```
 cypress/
 ├── e2e/          # End-to-end test specs (organized by feature)
-│   └── login/    # Login and signup tests
+│   └── auth/     # Login and signup tests
+│   └── prepdoc/  # Prepare document tests
 ├── pages/        # Page objects and reusable page methods
 ├── utils/        # Helper utilities (mail, api, etc.)
 ├── fixtures/     # Static test data and JSON fixtures
