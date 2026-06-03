@@ -1,61 +1,47 @@
 class LoginPage {
   visit() {
-    cy.visit('/login');
+    cy.visit("/login");
+  }
+
+  getSignupButton() {
+    return cy.contains(/sign up for free|register|create account/i).first();
+  }
+
+  goToSignup() {
+    this.getSignupButton().click();
   }
 
   getEmailInput() {
-    return cy.get('#login-email');
+    return cy.get("#login-email");
   }
 
   getPasswordInput() {
-    return cy.get('#login-password');
+    return cy.get("#login-password");
   }
 
   getLoginButton() {
-    return cy.contains('button', 'Login');
+    return cy.contains("button", "Login");
   }
 
   login(email, password) {
     this.getEmailInput().clear().type(email);
     this.getPasswordInput().clear().type(password, { log: false });
-    this.getLoginButton().should('not.be.disabled').click();
+    this.getLoginButton().should("not.be.disabled").click();
   }
 
-  getAccountMenu() {
-    // Look for account menu - typically in top right, can be avatar, button, or link with user info
-    // Try multiple selectors that commonly hold user account buttons
-    return cy.get(
-      'button[aria-label*="account"], ' +
-      'button[aria-label*="profile"], ' +
-      'button[aria-label*="user"], ' +
-      '[role="button"][aria-label*="account"], ' +
-      '[role="button"][aria-label*="profile"], ' +
-      'header button:last-of-type, ' +
-      'nav button:last-of-type, ' +
-      '[class*="header"] button:last-of-type',
-      { timeout: 10000 }
-    ).first();
+  verifyDashboard() {
+    cy.location('pathname').should('eq', '/dashboard');
+    cy.contains(/dashboard/i).should('be.visible');
   }
 
-  getLogoutButton() {
-    // Look for logout option in dropdown/menu
-    return cy.contains(/logout|sign out|exit/i).should('be.visible');
-  }
-
-  logout() {
-    // Click account menu to reveal logout option
-    this.getAccountMenu().click({ force: true });
-    // Wait for menu to appear
-    cy.wait(800);
-    // Click logout
-    this.getLogoutButton().click();
-    // Handle confirmation popup
-    // Look for confirm button in the dialog (Yes, Confirm, Logout, OK, etc.)
-    cy.contains('button', /yes|confirm|logout|ok/i, { timeout: 5000 }).click();
+  loginAndVerify(email, password) {
+    this.visit();
+    this.login(email, password);
+    this.verifyDashboard();
   }
 
   isLoggedIn() {
-    return cy.location('pathname').then(path => path !== '/login');
+    return cy.location("pathname").then((path) => path !== "/login");
   }
 }
 

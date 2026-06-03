@@ -107,8 +107,10 @@ npm run cy:run -- --browser edge
 
 ```
 cypress/
-├── e2e/          # End-to-end test specs
+├── e2e/          # End-to-end test specs (organized by feature)
+│   └── login/    # Login and signup tests
 ├── pages/        # Page objects and reusable page methods
+├── utils/        # Helper utilities (mail, api, etc.)
 ├── fixtures/     # Static test data and JSON fixtures
 ├── support/      # Global Cypress setup and custom commands
 ├── plugins/      # Cypress plugin configuration and hooks
