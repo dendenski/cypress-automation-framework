@@ -1,13 +1,13 @@
 import LoginPage from "../../pages/loginPage";
 import SignupPage from "../../pages/signupPage";
-import DashBoardPage from "../../pages/dashBoardPage";
+import DashboardPage from "../../pages/dashboardPage";
 import MailHelper from "../../utils/mailHelper";
 import SettingsPage from "../../pages/settingsPage";
 
 describe("Signup flow", () => {
   const login = new LoginPage();
   const signup = new SignupPage();
-  const dashboard = new DashBoardPage();
+  const dashboard = new DashboardPage();
   const settings = new SettingsPage();
   const letters = Cypress._.sampleSize("abcdefghijklmnopqrstuvwxyz", 6).join(
     "",

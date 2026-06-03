@@ -1,10 +1,10 @@
 import LoginPage from "../../pages/loginPage";
-import DashBoardPage from "../../pages/dashBoardPage";
+import DashboardPage from "../../pages/dashboardPage";
 import SettingsPage from "../../pages/settingsPage";
 
 describe("Login flow", () => {
   const login = new LoginPage();
-  const dashboard = new DashBoardPage();
+  const dashboard = new DashboardPage();
   const settings = new SettingsPage();
 
   beforeEach(() => {

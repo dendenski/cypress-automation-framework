@@ -1,4 +1,4 @@
-class DashBoardPage {
+class DashboardPage {
   visit() {
     cy.visit("/dashboard");
   }
@@ -40,4 +40,4 @@ class DashBoardPage {
   }
 }
 
-export default DashBoardPage;
+export default DashboardPage;
